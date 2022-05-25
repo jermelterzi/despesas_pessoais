@@ -1,0 +1,6 @@
+package br.com.afixcode.expenses
+
+import io.flutter.embedding.android.FlutterActivity
+
+class MainActivity: FlutterActivity() {
+}
