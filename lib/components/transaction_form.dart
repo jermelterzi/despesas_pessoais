@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
 
-class TransactionForm extends StatelessWidget {
-  TransactionForm(this.onSubmit, {Key? key}) : super(key: key);
+class TransactionForm extends StatefulWidget {
+  const TransactionForm(this.onSubmit, {Key? key}) : super(key: key);
 
-  final titleController = TextEditingController();
-  final valueController = TextEditingController();
   final Function(String text, double value) onSubmit;
+
+  @override
+  State<TransactionForm> createState() => _TransactionFormState();
+}
+
+class _TransactionFormState extends State<TransactionForm> {
+  final titleController = TextEditingController();
+
+  final valueController = TextEditingController();
+
+  _submitForm() {
+    final String title = titleController.text;
+    final double value = double.tryParse(valueController.text) ?? 0.0;
+
+    if(title.isEmpty || value == 0) {
+      return;
+    }
+
+    widget.onSubmit(title, value);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -15,6 +33,7 @@ class TransactionForm extends StatelessWidget {
         children: [
           TextField(
             controller: titleController,
+            onSubmitted: (_) => _submitForm(),
             decoration: const InputDecoration(
               fillColor: Colors.blue,
               labelText: 'Título',
@@ -22,6 +41,8 @@ class TransactionForm extends StatelessWidget {
           ),
           TextField(
             controller: valueController,
+            keyboardType: const TextInputType.numberWithOptions(decimal: true),
+            onSubmitted: (_) =>  _submitForm(),
             decoration: const InputDecoration(
               labelText: 'Valor (R\$)',
             ),
@@ -30,11 +51,7 @@ class TransactionForm extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               ElevatedButton(
-                onPressed: () {
-                  final String title = titleController.text;
-                  final double value = double.tryParse(valueController.text) ?? 0.0;
-                  onSubmit(title, value);
-                },
+                onPressed: _submitForm,
                 style: ElevatedButton.styleFrom(
                   primary: Colors.red,
                 ),
