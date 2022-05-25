@@ -65,7 +65,7 @@ class MyHomePage extends StatelessWidget {
                       ),
                       padding: const EdgeInsets.all(8),
                       child: Text(
-                        tr.price.toString(),
+                        ' R\$ ${tr.price.toStringAsFixed(2)}',
                         style: const TextStyle(
                           fontWeight: FontWeight.bold,
                           fontSize: 16,
