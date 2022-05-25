@@ -23,16 +23,16 @@ class MyHomePage extends StatelessWidget {
         title: const Text('Despesas Pessoais'),
       ),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: const [
-          SizedBox(
-            width: double.infinity,
-            child: Card(
-              color: Colors.blue,
-              elevation: 5,
-              child: Text('Relatório de Despesas'),
-            ),
+          Card(
+            color: Colors.blue,
+            elevation: 5,
+            child: Text('Relatório de Despesas'),
           ),
           Card(
+            color: Colors.green,
             child: Text('Transações'),
           ),
         ],
