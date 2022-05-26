@@ -32,45 +32,26 @@ class TransactionList extends StatelessWidget {
               itemBuilder: (ctx, index) {
                 final tr = transactions[index];
                 return Card(
-                  child: Row(
-                    children: [
-                      Container(
-                        margin: const EdgeInsets.symmetric(
-                          vertical: 16,
-                          horizontal: 8,
-                        ),
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.red,
-                            width: 2,
-                          ),
-                        ),
-                        padding: const EdgeInsets.all(8),
-                        child: Text(
-                          ' R\$ ${tr.price.toStringAsFixed(2)}',
-                          style: const TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 16,
-                            color: Colors.red,
-                          ),
-                        ),
-                      ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            tr.title,
-                            style: Theme.of(context).textTheme.headline6,
-                          ),
-                          Text(
-                            DateFormat('d MMM y').format(tr.date),
-                            style: const TextStyle(
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                  elevation: 4,
+                  child: ListTile(
+                    leading: const CircleAvatar(
+                        radius: 24,
+                        backgroundColor: Colors.red,
+                        child: Icon(
+                          Icons.attach_money,
+                          color: Colors.black,
+                        )),
+                    title: Text(
+                      tr.title,
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
+                    subtitle: Text(
+                      DateFormat('d MMM y').format(tr.date),
+                    ),
+                    trailing: Text(
+                      'R\$${tr.price.toStringAsFixed(2)}',
+                      style: Theme.of(context).textTheme.headline6,
+                    ),
                   ),
                 );
               },
