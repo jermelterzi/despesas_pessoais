@@ -1,3 +1,4 @@
+import 'package:expenses/components/chart_bar.dart';
 import 'package:expenses/models/transaction.dart';
 import 'package:intl/intl.dart';
 import 'package:flutter/material.dart';
@@ -17,12 +18,12 @@ class Chart extends StatelessWidget {
 
         double dailyTransactionsSum = 0.0;
 
-        for(int i = 0; i < transactionsGroup.length; i++) {
+        for (int i = 0; i < transactionsGroup.length; i++) {
           bool sameDay = transactionsGroup[i].date.day == weekDay.day;
           bool sameMonth = transactionsGroup[i].date.month == weekDay.month;
           bool sameYear = transactionsGroup[i].date.year == weekDay.year;
 
-          if(sameDay && sameMonth && sameYear) {
+          if (sameDay && sameMonth && sameYear) {
             dailyTransactionsSum += transactionsGroup[i].price;
           }
         }
@@ -40,57 +41,13 @@ class Chart extends StatelessWidget {
     return Card(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Column(
-            children: [
-              const Icon(Icons.attach_money),
-              SizedBox(),
-              Text(weeklyTransactions[3]['day'].toString()),
-            ],
-          ),
-          Column(
-            children: [
-              const Icon(Icons.attach_money),
-              SizedBox(),
-              Text(weeklyTransactions[2]['day'].toString()),
-            ],
-          ),
-          Column(
-            children: [
-              const Icon(Icons.attach_money),
-              SizedBox(),
-              Text(weeklyTransactions[1]['day'].toString()),
-            ],
-          ),
-          Column(
-            children: [
-              const Icon(Icons.attach_money),
-              SizedBox(),
-              Text(weeklyTransactions[0]['day'].toString()),
-            ],
-          ),
-          Column(
-            children: [
-              const Icon(Icons.attach_money),
-              SizedBox(),
-              Text(weeklyTransactions[6]['day'].toString()),
-            ],
-          ),
-          Column(
-            children: [
-              const Icon(Icons.attach_money),
-              SizedBox(),
-              Text(weeklyTransactions[5]['day'].toString()),
-            ],
-          ),
-          Column(
-            children: [
-              const Icon(Icons.attach_money),
-              SizedBox(),
-              Text(weeklyTransactions[4]['day'].toString()),
-            ],
-          ),
-        ],
+        children: weeklyTransactions.map((tr) {
+          return ChartBar(
+            dailyTransactionSum: double.tryParse(tr['dailyTransactions'].toString()) ?? 0,
+            dayOfWeek: tr['day'].toString(),
+            percentageOfWeek: 0,
+          );
+        }).toList(),
       ),
     );
   }
