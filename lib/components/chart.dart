@@ -36,18 +36,31 @@ class Chart extends StatelessWidget {
     );
   }
 
+  double get _weeklyTransactionsSum {
+    return weeklyTransactions.fold(0.0, (sum, tr) {
+      return sum + double.parse(tr['dailyTransactions'].toString());
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Card(
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: weeklyTransactions.map((tr) {
-          return ChartBar(
-            dailyTransactionSum: double.tryParse(tr['dailyTransactions'].toString()) ?? 0,
-            dayOfWeek: tr['day'].toString(),
-            percentageOfWeek: 0,
-          );
-        }).toList(),
+      elevation: 6,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: weeklyTransactions.map((tr) {
+            return Flexible(
+              fit: FlexFit.tight,
+              child: ChartBar(
+                dailyTransactionSum: double.parse(tr['dailyTransactions'].toString()),
+                dayOfWeek: tr['day'].toString(),
+                percentageOfWeek:double.parse(tr['dailyTransactions'].toString()) / _weeklyTransactionsSum,
+              ),
+            );
+          }).toList(),
+        ),
       ),
     );
   }

@@ -14,22 +14,41 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: Row(
-        children: [
-          Column(
+    return Column(
+      children: [
+        FittedBox(
+          child: Text('R\$${dailyTransactionSum.toStringAsFixed(2)}'),
+        ),
+        SizedBox(
+          height: 60,
+          width: 10,
+          child: Stack(
+            alignment: Alignment.bottomCenter,
             children: [
-              const Icon(Icons.attach_money),
-              SizedBox(
-                height: 60,
-                width: 10,
-                child: Text(dailyTransactionSum.toString()),
+              Container(
+                decoration: BoxDecoration(
+                  border: Border.all(
+                    color: Colors.black,
+                    width: 1.0,
+                  ),
+                  color: Colors.grey.shade200,
+                  borderRadius: BorderRadius.circular(5),
+                ),
               ),
-              Text(dayOfWeek),
+              FractionallySizedBox(
+                heightFactor: percentageOfWeek,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).colorScheme.primary,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+              ),
             ],
           ),
-        ],
-      ),
+        ),
+        Text(dayOfWeek),
+      ],
     );
   }
 }
