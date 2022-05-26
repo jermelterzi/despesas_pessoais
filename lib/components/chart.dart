@@ -33,7 +33,7 @@ class Chart extends StatelessWidget {
           'dailyTransactions': dailyTransactionsSum,
         };
       },
-    );
+    ).reversed.toList();
   }
 
   double get _weeklyTransactionsSum {
