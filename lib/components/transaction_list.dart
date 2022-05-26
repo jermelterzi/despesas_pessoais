@@ -26,7 +26,7 @@ class TransactionList extends StatelessWidget {
             ],
           )
         : SizedBox(
-            height: 320,
+            height: 480,
             child: ListView.builder(
               itemCount: transactions.length,
               itemBuilder: (ctx, index) {
