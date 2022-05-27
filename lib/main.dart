@@ -24,17 +24,17 @@ class ExpensesApp extends StatelessWidget {
           secondary: Colors.amber,
         ),
         textTheme: theme.textTheme.copyWith(
-          headline6: const TextStyle(
+          headline6: TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 16,
+            fontSize: 16 * MediaQuery.of(context).textScaleFactor,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
-        appBarTheme: const AppBarTheme(
+        appBarTheme: AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 24,
+            fontSize: 24 * MediaQuery.of(context).textScaleFactor,
             fontWeight: FontWeight.bold,
           ),
         ),
@@ -111,14 +111,14 @@ class _MyHomePageState extends State<MyHomePage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            SizedBox(
+            Container(
               height: availableHeight * 0.3,
               child: Chart(_recentTransactions),
             ),
             const SizedBox(
               height: 16,
             ),
-            SizedBox(
+            Container(
               height: availableHeight * 0.7,
               child: TransactionList(_transactions, _removeTransaction),
             ),
