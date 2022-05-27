@@ -12,25 +12,25 @@ class TransactionList extends StatelessWidget {
   Widget build(BuildContext context) {
     return transactions.isEmpty
         ? LayoutBuilder(
-          builder: (context, constraints) {
-            return Column(
-              children: [
-                Text(
-                  'Nenhuma Transação Cadastrada!',
-                  style: Theme.of(context).textTheme.headline6,
-                ),
-                SizedBox(height: constraints.maxHeight * 0.1),
-                SizedBox(
-                  height: constraints.maxHeight * 0.6,
-                  child: Image.asset(
-                    'assets/images/waiting.png',
-                    fit: BoxFit.cover,
+            builder: (context, constraints) {
+              return Column(
+                children: [
+                  Text(
+                    'Nenhuma Transação Cadastrada!',
+                    style: Theme.of(context).textTheme.headline6,
                   ),
-                ),
-              ],
-            );
-          },
-        )
+                  SizedBox(height: constraints.maxHeight * 0.1),
+                  SizedBox(
+                    height: constraints.maxHeight * 0.6,
+                    child: Image.asset(
+                      'assets/images/waiting.png',
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                ],
+              );
+            },
+          )
         : ListView.builder(
             itemCount: transactions.length,
             itemBuilder: (ctx, index) {
@@ -55,15 +55,24 @@ class TransactionList extends StatelessWidget {
                   trailing: FittedBox(
                     child: Row(
                       children: [
-                        Text(
-                          'R\$${tr.price.toStringAsFixed(2)}',
-                          style: Theme.of(context).textTheme.headline6,
+                        Padding(
+                          padding: const EdgeInsets.only(right: 8.0),
+                          child: Text(
+                            'R\$${tr.price.toStringAsFixed(2)}',
+                            style: Theme.of(context).textTheme.headline6,
+                          ),
                         ),
-                        IconButton(
-                          onPressed: () => onRemove(tr.id),
-                          icon: const Icon(Icons.delete),
-                          color: Theme.of(context).errorColor,
-                        ),
+                        MediaQuery.of(context).size.width > 480
+                            ? ElevatedButton.icon(
+                                onPressed: () => onRemove(tr.id),
+                                icon: const Icon(Icons.delete),
+                                label: const Text('Delete'),
+                              )
+                            : IconButton(
+                                onPressed: () => onRemove(tr.id),
+                                icon: const Icon(Icons.delete),
+                                color: Theme.of(context).errorColor,
+                              ),
                       ],
                     ),
                   ),
