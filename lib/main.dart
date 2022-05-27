@@ -51,11 +51,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _transactions = [
-    Transaction(id: '0', title: 'Teclado', price: 150.0, date: DateTime.now().subtract(Duration(days: 2))),
-    Transaction(id: '1', title: 'Mouse', price: 200.0, date: DateTime.now().subtract(Duration(days: 1))),
-    Transaction(id: '2', title: 'Notebook', price: 2000.0, date: DateTime.now().subtract(Duration(days: 15))),
-  ];
+  final List<Transaction> _transactions = [];
 
   List<Transaction> get _recentTransactions {
     return _transactions.where((tr) {
@@ -67,12 +63,12 @@ class _MyHomePageState extends State<MyHomePage> {
     }).toList();
   }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime transactionDay) {
     final newTransaction = Transaction(
-      id: Random().nextDouble().toString(),
+      id: Random().nextDouble(),
       title: title,
       price: value,
-      date: DateTime.now(),
+      date: transactionDay,
     );
     setState(() {
       _transactions.add(newTransaction);
@@ -88,24 +84,44 @@ class _MyHomePageState extends State<MyHomePage> {
     );
   }
 
+  _removeTransaction(double transactionId) {
+    setState(() {
+      _transactions.removeWhere((tr) => tr.id == transactionId);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+
+    final appBar = AppBar(
+      title: const Text('Despesas Pessoais'),
+      actions: [
+        IconButton(
+          onPressed: () => _openTransactionFormModal(context),
+          icon: const Icon(Icons.add),
+        ),
+      ],
+    );
+
+    final availableHeight = MediaQuery.of(context).size.height - appBar.preferredSize.height - MediaQuery.of(context).padding.top;
+
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Despesas Pessoais'),
-        actions: [
-          IconButton(
-            onPressed: () => _openTransactionFormModal(context),
-            icon: const Icon(Icons.add),
-          ),
-        ],
-      ),
+      appBar: appBar,
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Chart(_recentTransactions),
-            TransactionList(_transactions),
+            SizedBox(
+              height: availableHeight * 0.3,
+              child: Chart(_recentTransactions),
+            ),
+            const SizedBox(
+              height: 16,
+            ),
+            SizedBox(
+              height: availableHeight * 0.7,
+              child: TransactionList(_transactions, _removeTransaction),
+            ),
           ],
         ),
       ),
