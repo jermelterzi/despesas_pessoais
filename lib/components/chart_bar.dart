@@ -14,44 +14,55 @@ class ChartBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        SizedBox(
-          width: 40,
-          child: FittedBox(
-            child: Text('R\$${dailyTransactionSum.toStringAsFixed(2)}'),
+    return LayoutBuilder(builder: (context, constraints) {
+      return Column(
+        children: [
+          SizedBox(
+            height: constraints.maxHeight * 0.15,
+            child: FittedBox(
+              child: Text('R\$${dailyTransactionSum.toStringAsFixed(2)}'),
+            ),
           ),
-        ),
-        SizedBox(
-          height: 60,
-          width: 10,
-          child: Stack(
-            alignment: Alignment.bottomCenter,
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 1.0,
-                  ),
-                  color: Colors.grey.shade200,
-                  borderRadius: BorderRadius.circular(5),
-                ),
-              ),
-              FractionallySizedBox(
-                heightFactor: percentageOfWeek,
-                child: Container(
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
+          ),
+          SizedBox(
+            height: constraints.maxHeight * 0.6,
+            width: 10,
+            child: Stack(
+              alignment: Alignment.bottomCenter,
+              children: [
+                Container(
                   decoration: BoxDecoration(
-                    color: Theme.of(context).colorScheme.primary,
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 1.0,
+                    ),
+                    color: Colors.grey.shade200,
                     borderRadius: BorderRadius.circular(5),
                   ),
                 ),
-              ),
-            ],
+                FractionallySizedBox(
+                  heightFactor: percentageOfWeek,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: Theme.of(context).colorScheme.primary,
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-        Text(dayOfWeek),
-      ],
-    );
+          SizedBox(
+            height: constraints.maxHeight * 0.05,
+          ),
+          Container(
+            height: constraints.maxHeight * 0.15,
+            child: Text(dayOfWeek),
+          ),
+        ],
+      );
+    });
   }
 }
