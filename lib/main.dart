@@ -24,17 +24,17 @@ class ExpensesApp extends StatelessWidget {
           secondary: Colors.amber,
         ),
         textTheme: theme.textTheme.copyWith(
-          headline6: TextStyle(
+          headline6: const TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 16 * MediaQuery.of(context).textScaleFactor,
+            fontSize: 16,
             fontWeight: FontWeight.bold,
             color: Colors.black,
           ),
         ),
-        appBarTheme: AppBarTheme(
+        appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
             fontFamily: 'OpenSans',
-            fontSize: 24 * MediaQuery.of(context).textScaleFactor,
+            fontSize: 24,
             fontWeight: FontWeight.bold,
           ),
         ),
