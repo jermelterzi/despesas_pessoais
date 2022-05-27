@@ -44,49 +44,58 @@ class _TransactionFormState extends State<TransactionForm> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        children: [
-          TextField(
-            controller: _titleController,
-            onSubmitted: (_) => _submitForm(),
-            decoration: const InputDecoration(
-              fillColor: Colors.blue,
-              labelText: 'Título',
-            ),
-          ),
-          TextField(
-            controller: _valueController,
-            keyboardType: const TextInputType.numberWithOptions(decimal: true),
-            onSubmitted: (_) => _submitForm(),
-            decoration: const InputDecoration(
-              labelText: 'Valor (R\$)',
-            ),
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text('Data selecionada: ${DateFormat('d/MM/y').format(_selectedDate)}'),
-              TextButton(
-                onPressed: _showDatePicker,
-                child: const Text('Selecionar Data'),
+    return SingleChildScrollView(
+      child: Padding(
+        padding: EdgeInsets.only(
+          top: 10,
+          left: 10,
+          right: 10,
+          bottom: 10 + MediaQuery.of(context).viewInsets.bottom,
+        ),
+        child: Column(
+          children: [
+            TextField(
+              controller: _titleController,
+              onSubmitted: (_) => _submitForm(),
+              decoration: const InputDecoration(
+                fillColor: Colors.blue,
+                labelText: 'Título',
               ),
-            ],
-          ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              ElevatedButton(
-                onPressed: _submitForm,
-                style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
+            ),
+            TextField(
+              controller: _valueController,
+              keyboardType:
+                  const TextInputType.numberWithOptions(decimal: true),
+              onSubmitted: (_) => _submitForm(),
+              decoration: const InputDecoration(
+                labelText: 'Valor (R\$)',
+              ),
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                    'Data selecionada: ${DateFormat('d/MM/y').format(_selectedDate)}'),
+                TextButton(
+                  onPressed: _showDatePicker,
+                  child: const Text('Selecionar Data'),
                 ),
-                child: const Text('Nova transação'),
-              ),
-            ],
-          )
-        ],
+              ],
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                ElevatedButton(
+                  onPressed: _submitForm,
+                  style: ElevatedButton.styleFrom(
+                    primary: Colors.red,
+                  ),
+                  child: const Text('Nova transação'),
+                ),
+              ],
+            )
+          ],
+        ),
       ),
     );
   }
