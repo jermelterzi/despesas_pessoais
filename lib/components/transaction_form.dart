@@ -1,6 +1,6 @@
+import 'package:expenses/components/adaptive_date_picker.dart';
 import 'package:expenses/components/adaptive_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/intl.dart';
 
 import 'adaptive_button.dart';
 
@@ -30,21 +30,6 @@ class _TransactionFormState extends State<TransactionForm> {
     widget.onSubmit(title, value, date);
   }
 
-  _showDatePicker() {
-    showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2019),
-      lastDate: DateTime.now(),
-    ).then((date) {
-      setState(() {
-        if (date != null) {
-          _selectedDate = date;
-        }
-      });
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -70,16 +55,13 @@ class _TransactionFormState extends State<TransactionForm> {
               keyboardType:
                   const TextInputType.numberWithOptions(decimal: true),
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                    'Data selecionada: ${DateFormat('d/MM/y').format(_selectedDate)}'),
-                TextButton(
-                  onPressed: _showDatePicker,
-                  child: const Text('Selecionar Data'),
-                ),
-              ],
+            AdaptiveDatePicker(
+              selectedDate: _selectedDate,
+              onChanged: (newDate) {
+                setState(() {
+                  _selectedDate = newDate;
+                });
+              },
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
